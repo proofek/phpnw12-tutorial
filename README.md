@@ -1191,3 +1191,72 @@ Time: 0 seconds, Memory: 6.25Mb
 
 OK (10 tests, 12 assertions)
 ```
+
+### Testing warnings and norices with PHPUnit_Framework_Error_Warning and PHPUnit_Framework_Error_Notice
+
+In a similar way you can catch PHP warnings and notices. A warning for example is thrown when you try to include a not existent file using include or include_once.
+
+Let’s assume that there would be a function called *includeDependencies()* in our *Room* class that includes a file. We want to make sure we can test a situation when the file we want to include is not available, because it either doesn’t exists or is for example not accessible:
+
+```php
+// src/Workshop/Room.php
+<?php
+
+class Room
+{
+	/**
+	 * Completely ridiculous method only written to show how to catch PHP E_WARNINGS
+	 *
+	 * @obsolete
+	 *
+	 * @return void
+	 */
+	public function includeDependencies()
+	{
+		include_once 'file/that/not/exists';
+	}
+}
+
+// (...)
+```
+
+The test itself will be very similar to the one above:
+
+```php
+// tests/Workshop/RoomTest.php
+<?php
+// (...)
+
+public function testIncludeDependenciesThrowsWarningForMissingFiles()
+{
+	$room = new Room();
+	$room->includeDependencies();
+}
+
+// (...)
+```
+
+```
+$ phpunit
+PHPUnit 3.7.1 by Sebastian Bergmann.
+
+Configuration read from /Users/smarek/Google Drive/phpnw12-workshop/phpunit.xml.dist
+
+E..........
+
+Time: 0 seconds, Memory: 6.50Mb
+
+There was 1 error:
+
+1) PhpNw12\Tests\Workshop\RoomTest::testIncludeDependenciesThrowsWarningForMissingFiles
+include_once(file/that/not/exists): failed to open stream: No such file or directory
+
+/Users/smarek/Google Drive/phpnw12-workshop/src/Workshop/Room.php:26
+/Users/smarek/Google Drive/phpnw12-workshop/src/Workshop/Room.php:26
+/Users/smarek/Google Drive/phpnw12-workshop/tests/Workshop/RoomTest.php:24
+/usr/local/bin/phpunit:46
+
+FAILURES!
+Tests: 11, Assertions: 12, Errors: 1.
+```
+

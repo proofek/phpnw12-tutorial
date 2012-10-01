@@ -12,4 +12,17 @@ namespace PhpNw12\Workshop;
  *
  * @author Sebastian Marek proofek@gmail.com
  */
-class Room { }
+class Room
+{
+	/**
+	 * Completely ridiculous method only written to show how to catch PHP E_WARNINGS
+	 *
+	 * @obsolete
+	 *
+	 * @return void
+	 */
+	public function includeDependencies()
+	{
+		include_once 'file/that/not/exists';
+	}
+}
