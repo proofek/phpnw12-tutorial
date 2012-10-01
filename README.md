@@ -292,7 +292,7 @@ OK (2 tests, 2 assertions)
 Exercise 2: Fixing the first failure
 ------------------------------------
 
-Let’s work on the *getAttendees()* method, as it doesn’t return anything yet. 
+Let’s work on the *getAttendees()* method, as it doesn’t return anything yet.
 We will se the power of unit tests when used during refactoring. What we want to do first is to return some real data –
 we will create a private property called *$_attendees* that will be used as the value returned by *getAttendees()* method.
 
@@ -425,7 +425,7 @@ PHPUnit experience can be greatly enhanced with some of the command line options
 Default PHPUnit output is quite dull. You can greatly enhance your experience with colors. *--colors* options react to what happens during runtime, and uses colors to get your attention. Green for passing tests, yellow for incomplete,skipped or general warnings and red when something goes horribly wrong.
 
 ```
-$ phpunit --colors tests/Workshop/TutorialTest.php 
+$ phpunit --colors tests/Workshop/TutorialTest.php
 PHPUnit 3.7.1 by Sebastian Bergmann.
 
 ..
@@ -485,7 +485,7 @@ OK (1 test, 1 assertion)
 Exercise 4: More assertions
 ---------------------------
 
-There is a big set of asserts that you can use. Using the right one for the job will make your life easier and also will self document the code. Tests can grow with time and can become quite nasty and hard to maintain if not written right. It is important to be aware of the available asserts and use the one that suits the given situation the best. 
+There is a big set of asserts that you can use. Using the right one for the job will make your life easier and also will self document the code. Tests can grow with time and can become quite nasty and hard to maintain if not written right. It is important to be aware of the available asserts and use the one that suits the given situation the best.
 
 Full list of asserts is documented in PHPUnit manual. See http://www.phpunit.de/manual/current/en/writing-tests-forphpunit.html#writing-tests-for-phpunit.assertions for more details.
 
@@ -509,7 +509,7 @@ public function testTutorialHasNoPlacesLeftWhenMoreThen3Attendees()
 		"Martha",
 		"John"
 	);
-	
+
 	$tutorial = new Tutorial($attendees);
 	$this->assertFalse($tutorial->arePlacesLeft());
 }
@@ -687,4 +687,101 @@ PHPUnit 3.7.1 by Sebastian Bergmann.
 Time: 0 seconds, Memory: 5.75Mb
 
 OK (5 tests, 7 assertions)
+```
+
+### testing variable types with assertInternalType() and assertInstanceOf()
+
+Asserting specific type of object is also a useful feature. We have already used *assertInternalType()* to check for an internal PHP type. But there is a separate assertion if it comes to checking for a user type – *assertInstanceOf()*. For that we will introduce a new class called *Room* and add a room to a tutorial by initializing it in Tutorial’s constructor. The first test we’re gonna write will test the constructor to make sure the room has been initialized and is of correct type.
+
+```php
+// tests/Workshop/TutorialTest.php
+<?php
+// (...)
+
+require_once __DIR__ . '/../../src/Workshop/Room.php';
+
+// (...)
+
+/**
+ * Checks whether a room has been prepared
+ */
+public function testRoomIsAvailable()
+{
+	$tutorial = new Tutorial();
+	$this->assertInstanceOf('PhpNw12\Workshop\Room',
+	$tutorial->getRoom());
+}
+
+// (...)
+```
+
+```php
+// src/Workshop/Room.php
+<?php
+/**
+ * PHPNW12 Workshop
+ *
+ * @author Sebastian Marek proofek@gmail.com
+ */
+
+namespace PhpNw12\Workshop;
+
+/**
+ * Room class
+ *
+ * @author Sebastian Marek proofek@gmail.com
+ */
+class Room { }
+```
+
+```php
+// src/Workshop/Tutorial.php
+<?php
+
+// (...)
+
+/**
+ * A tutorial room
+ *
+ * @var PhpNw12\Workshop\Room
+ */
+private $_room;
+
+// (...)
+
+/**
+ * Constructor initiates the list of attendees
+ *
+ * @return void
+ */
+public function __construct(array $attendees = array())
+{
+	$this->_attendees = $attendees;
+	$this->_room = new Room();
+}
+
+// (...)
+
+/**
+ * Returns a room
+ *
+ * @return PhpNw12\Workshop\Room
+ */
+public function getRoom()
+{
+	return $this->_room;
+}
+
+// (...)
+```
+
+```
+$ phpunit tests/Workshop/TutorialTest.php
+PHPUnit 3.7.1 by Sebastian Bergmann.
+
+......
+
+Time: 0 seconds, Memory: 5.75Mb
+
+OK (6 tests, 8 assertions)
 ```

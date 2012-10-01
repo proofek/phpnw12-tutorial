@@ -7,6 +7,7 @@
 namespace PhpNw12\Tests\Workshop;
 
 require_once __DIR__ . '/../../src/Workshop/Tutorial.php';
+require_once __DIR__ . '/../../src/Workshop/Room.php';
 
 use PhpNw12\Workshop\Tutorial;
 
@@ -83,5 +84,15 @@ class TutorialTest extends \PHPUnit_Framework_TestCase
 		$this->assertGreaterThan(0, $tutorial->getNumberOfAttendees());
 		$this->assertLessThan(Tutorial::MAX_CAPACITY, $tutorial->getNumberOfAttendees());
 		$this->assertNotNull($tutorial->getNumberOfAttendees());
+	}
+
+	/**
+	 * Checks whether a room has been prepared
+	 */
+	public function testRoomIsAvailable()
+	{
+		$tutorial = new Tutorial();
+		$this->assertInstanceOf('PhpNw12\Workshop\Room',
+		$tutorial->getRoom());
 	}
 }

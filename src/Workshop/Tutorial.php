@@ -23,6 +23,13 @@ class Tutorial
 	private $_attendees;
 
 	/**
+	 * A tutorial room
+	 *
+	 * @var PhpNw12\Workshop\Room
+	 */
+	private $_room;
+
+	/**
 	 * Maximum capacity of the tutorial
 	 *
 	 * @var integer
@@ -37,6 +44,7 @@ class Tutorial
 	public function __construct(array $attendees = array())
 	{
 		$this->_attendees = $attendees;
+		$this->_room = new Room();
 	}
 
 	/**
@@ -57,6 +65,16 @@ class Tutorial
 	public function getAttendees()
 	{
 		return $this->_attendees;
+	}
+
+	/**
+	 * Returns a room
+	 *
+	 * @return PhpNw12\Workshop\Room
+	 */
+	public function getRoom()
+	{
+		return $this->_room;
 	}
 
 	/**
