@@ -23,6 +23,16 @@ class Tutorial
 	private $_attendees;
 
 	/**
+	 * Constructor initiates the list of attendees
+	 *
+	 * @return void
+	 */
+	public function __construct(array $attendees)
+	{
+		$this->_attendees = $attendees;
+	}
+
+	/**
 	 * Returns a greetings message
 	 *
 	 * @return string

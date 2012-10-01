@@ -346,3 +346,56 @@ FAILURES!
 Tests: 2, Assertions: 2, Failures: 1.
 ```
 
+Well, that obviously makes sense, our test is making sure that *getAttendees()* method always returns an array. As we have modified the code and now return uninitialized variable (which by default is null) we get the error.
+So, let’s fix it then. It seems like just initializing the property in the constructor should solve the problem. In fact, if we make the constructor accept an array of attendees we will be able then to return some data without actually hardcoding it in the *getAttendees()* method.
+
+```php
+// src/Workshop/Tutorial.php
+<?php
+
+// (...)
+
+/**
+ * Constructor initiates the list of attendees
+ *
+ * @return void
+ */
+public function __construct(array $attendees)
+{
+	$this->_attendees = $attendees;
+}
+
+// (...)
+```
+
+And checking the tests again:
+
+```
+$ phpunit tests/Workshop/TutorialTest.php
+PHPUnit 3.7.1 by Sebastian Bergmann.
+
+EE
+
+Time: 0 seconds, Memory: 5.25Mb
+
+There were 2 errors:
+
+1) PhpNw12\Tests\Workshop\TutorialTest::testGreetingsReturnWelcomeMessage
+Argument 1 passed to PhpNw12\Workshop\Tutorial::__construct() must be an array, none given, called in /Users/smarek/Google Drive/phpnw12-workshop/tests/Workshop/TutorialTest.php on line 25 and defined
+
+/Users/smarek/Google Drive/phpnw12-workshop/src/Workshop/Tutorial.php:30
+/Users/smarek/Google Drive/phpnw12-workshop/tests/Workshop/TutorialTest.php:25
+/usr/local/bin/phpunit:46
+
+2) PhpNw12\Tests\Workshop\TutorialTest::GetAttendeesReturnsListOfNames
+Argument 1 passed to PhpNw12\Workshop\Tutorial::__construct() must be an array, none given, called in /Users/smarek/Google Drive/phpnw12-workshop/tests/Workshop/TutorialTest.php on line 39 and defined
+
+/Users/smarek/Google Drive/phpnw12-workshop/src/Workshop/Tutorial.php:30
+/Users/smarek/Google Drive/phpnw12-workshop/tests/Workshop/TutorialTest.php:39
+/usr/local/bin/phpunit:46
+
+FAILURES!
+Tests: 2, Assertions: 0, Errors: 2.
+```
+
+Now we broke both of the tests, because we have changed the constructor definition (by simply introducing it), but have not changed the tests itself to reflect it!
