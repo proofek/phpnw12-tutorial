@@ -21,5 +21,6 @@ class Tutorial
 	 */
 	public function greetings()
 	{
+		return "Hello everybody at 'Test your code like a pro – PHPUnit in practice' tutorial";
 	}
 }

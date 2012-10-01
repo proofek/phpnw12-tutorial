@@ -175,3 +175,32 @@ Tests: 1, Assertions: 1, Failures: 1.
 ```
 
 Ha! Now we’re getting somewhere. The test is failing because our function returns nothing so far! Let’s change it then!
+
+```php
+// src/Workshop/Tutorial.php
+<?php
+
+// (...)
+
+public function greetings()
+{
+	return "Hello everybody at 'Test your code like a pro – PHPUnit in practice' tutorial";
+}
+
+// (...)
+```
+
+and see if it works:
+
+```
+$ phpunit tests/Workshop/TutorialTest.php
+PHPUnit 3.7.1 by Sebastian Bergmann.
+
+.
+
+Time: 0 seconds, Memory: 5.50Mb
+
+OK (1 test, 1 assertion)
+```
+
+And here it is – our first successful test!
