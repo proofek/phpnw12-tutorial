@@ -174,4 +174,31 @@ class TutorialTest extends \PHPUnit_Framework_TestCase
 		$tutorial = new Tutorial();
 		$tutorial->displaySummary();
 	}
+
+	/**
+	 * Provides list of attendees no bigger then maximum tutorial capacity
+	 * 
+	 * @return array
+	 */
+	public function provideListOfAttendeesNotExceedingMaximumTutorialCapacity()
+	{
+		return array(
+			// No attendees
+			array(
+				array()
+			),
+			// One attendee
+			array(
+				array("Mr One")
+			),
+			// Two attendees
+			array(
+				array("Mr One", "Mr Two")
+			),
+			// Three attendees
+			array(
+				array("Mr One", "Mr Two", "Mr Three")
+			),
+		);
+	}
 }

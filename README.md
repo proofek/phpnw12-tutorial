@@ -1381,3 +1381,47 @@ Time: 0 seconds, Memory: 6.50Mb
 
 OK (12 tests, 14 assertions)
 ```
+
+Exercise 9: Using data providers
+--------------------------------
+
+Sometimes you want to run the same tests but with different input. Obviously duplicating the test just to set different set of expectations is not very efficient. Data providers come very handy in this case - you only have to define additional method then returns list of input data and expectations and feed it into your test using *@dataProvider* annotation.
+
+*testTutorialIsNotFullWhenItExceedsMaximumCapacity()* is a good candidate for an improvement, as depending on the input we could get different result. Let’s start with writing the data provider first. All you need to know is that it has to be a public method in the same class returning an array with a set of data. It’s a good practice to give it a self-describing name so you know what this data provider is for!
+
+For us we need a list of attendees that doesn’t exceed the maximum capacity of the tutorial. So why not give it a name of *provideListOfAttendeesNotExceedingMaximumTutorialCapacity*! Also adding some comments along every entry of the array with an explanation of what it provides (or what scenario it can be used for) is very helpful, especially if you have to look at the test again after some period of time.
+
+```php
+// tests/Workshop/TutorialTest.php
+<?php
+// (...)
+
+/**
+ * Provides list of attendees no bigger then maximum tutorial capacity
+ * 
+ * @return array
+ */
+public function provideListOfAttendeesNotExceedingMaximumTutorialCapacity()
+{
+	return array(
+		// No attendees
+		array(
+			array()
+		),
+		// One attendee
+		array(
+			array("Mr One")
+		),
+		// Two attendees
+		array(
+			array("Mr One", "Mr Two")
+		),
+		// Three attendees
+		array(
+			array("Mr One", "Mr Two", "Mr Three")
+		),
+	);
+}
+
+// (...)
+```
