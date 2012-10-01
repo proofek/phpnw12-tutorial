@@ -1260,3 +1260,35 @@ FAILURES!
 Tests: 11, Assertions: 12, Errors: 1.
 ```
 
+Just the expectation will be set up using a different type of exception:
+
+```php
+// tests/Workshop/RoomTest.php
+<?php
+// (...)
+
+/**
+ * @expectedException PHPUnit_Framework_Error_Warning
+ */
+public function testIncludeDependenciesThrowsWarningForMissingFiles()
+{
+	$room = new Room();
+	$room->includeDependencies();
+}
+
+// (...)
+```
+
+```
+$ phpunit
+PHPUnit 3.7.1 by Sebastian Bergmann.
+
+Configuration read from /Users/smarek/Google Drive/phpnw12-workshop/phpunit.xml.dist
+
+...........
+
+Time: 0 seconds, Memory: 6.50Mb
+
+OK (11 tests, 13 assertions)
+```
+

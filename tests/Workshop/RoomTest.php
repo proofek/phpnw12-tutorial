@@ -18,6 +18,9 @@ use PhpNw12\Workshop\Room;
  */
 class RoomTest extends \PHPUnit_Framework_TestCase
 {
+	/**
+ 	 * @expectedException PHPUnit_Framework_Error_Warning
+ 	 */
 	public function testIncludeDependenciesThrowsWarningForMissingFiles()
 	{
 		$room = new Room();
