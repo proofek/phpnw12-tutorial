@@ -1398,7 +1398,7 @@ For us we need a list of attendees that doesn’t exceed the maximum capacity of
 
 /**
  * Provides list of attendees no bigger then maximum tutorial capacity
- * 
+ *
  * @return array
  */
 public function provideListOfAttendeesNotExceedingMaximumTutorialCapacity()
@@ -1450,7 +1450,7 @@ public function testTutorialIsNotFullWhenItNotExceedsMaximumCapacity(array $atte
 // (...)
 ```
 
-Take a note that after running the test suite now, number of the tests and assertions has changed appropriately. 
+Take a note that after running the test suite now, number of the tests and assertions has changed appropriately.
 
 ```
 $ phpunit
@@ -1488,3 +1488,38 @@ Generating code coverage report in HTML format ... done
 ```
 
 Then just open /tmp/phpnw12-workshop/index.html in your browser.
+
+### forceCoversAnnotation option and @covers annotation
+
+By default PHPUnit is reporting all the code that has been executed as covered, but it doesn't pay particual attention to what's been tested. *@covers* annotation allows you to specify on the test level what you are testing, contrast that with executed code and spit out the report for you. This way you can make the report reflect the reality much better.
+
+All you have to do is to add *@covers* annotation for every test specifying exactly which part of the code you are testing. The format of the annotation is as follows:
+
+@covers <class-name>::<class-method>
+
+Please note lack of the parenthesis at the end of the method name!
+
+Here’s an example:
+
+```php
+// tests/Workshop/TutorialTest.php
+<?php
+// (...)
+
+/**
+ * Makes sure greetings message is shown on the screen.
+ *
+ * @covers PhpNw12\Workshop\Tutorial::displaySummary
+ */
+public function testDisplayShowsGreetingsMessage()
+{
+	$expectedMessage = "Hello everybody at 'Test your code like a pro – PHPUnit in practice' tutorial";
+	$this->expectOutputString($expectedMessage);
+	$tutorial = new Tutorial();
+	$tutorial->displaySummary();
+}
+
+// (...)
+```
+
+Now when you generate the report you might notice slight change in the numbers on the report.

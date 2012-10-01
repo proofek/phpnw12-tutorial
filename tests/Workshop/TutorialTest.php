@@ -20,6 +20,8 @@ class TutorialTest extends \PHPUnit_Framework_TestCase
 {
 	/**
 	 * Very simple test verifying the welcome message text
+	 * 
+	 * @covers PhpNw12\Workshop\Tutorial::greetings
 	 */
 	public function testGreetingsReturnWelcomeMessage()
 	{
@@ -34,6 +36,8 @@ class TutorialTest extends \PHPUnit_Framework_TestCase
 	 * @test
 	 *
 	 * A test making sure getAttendees returns an array
+	 * 
+	 * @covers PhpNw12\Workshop\Tutorial::getAttendees
 	 */
 	public function GetAttendeesReturnsListOfNames()
 	{
@@ -44,6 +48,8 @@ class TutorialTest extends \PHPUnit_Framework_TestCase
 
 	/**
 	 * Checks that if there are more then 3 attendees there are no places left
+	 * 
+	 * @covers PhpNw12\Workshop\Tutorial::arePlacesLeft
 	 */
 	public function testTutorialHasNoPlacesLeftWhenMoreThen3Attendees()
 	{
@@ -60,6 +66,8 @@ class TutorialTest extends \PHPUnit_Framework_TestCase
 
 	/**
 	 * Checks that if there are less then 3 attendees there are still some places left
+	 * 
+	 * @covers PhpNw12\Workshop\Tutorial::arePlacesLeft
 	 */
 	public function testTutorialHasPlacesLeftWhenLessThen3Attendees()
 	{
@@ -75,6 +83,8 @@ class TutorialTest extends \PHPUnit_Framework_TestCase
 	 * Checks whether we have not exceeded maximum number of attendees
 	 * 
 	 * @dataProvider provideListOfAttendeesNotExceedingMaximumTutorialCapacity
+	 * @covers PhpNw12\Workshop\Tutorial::__construct
+	 * @covers PhpNw12\Workshop\Tutorial::getNumberOfAttendees
 	 */
 	public function testTutorialIsNotFullWhenItNotExceedsMaximumCapacity(array $attendees)
 	{
@@ -87,6 +97,8 @@ class TutorialTest extends \PHPUnit_Framework_TestCase
 
 	/**
 	 * Checks whether a room has been prepared
+	 * 
+	 * @covers PhpNw12\Workshop\Tutorial::getRoom
 	 */
 	public function testRoomIsAvailable()
 	{
@@ -97,6 +109,8 @@ class TutorialTest extends \PHPUnit_Framework_TestCase
 
 	/**
 	 * Checks whether an attendee got added to the tutorial
+	 * 
+	 * @covers PhpNw12\Workshop\Tutorial::__construct
 	 */
 	public function testAttendeeGotAddedToTheList()
 	{
@@ -110,6 +124,9 @@ class TutorialTest extends \PHPUnit_Framework_TestCase
 
 	/**
 	 * Checks whether the number of attendees is correct
+	 * 
+	 * @covers PhpNw12\Workshop\Tutorial::__construct
+	 * @covers PhpNw12\Workshop\Tutorial::getAttendees
 	 */
 	public function testGetAttendeesReturnCorrectNumberOfAttendees()
 	{
@@ -124,6 +141,8 @@ class TutorialTest extends \PHPUnit_Framework_TestCase
 
 	/**
 	 * Makes sure you can't add more attendees to oversubscribed tutorial
+	 * 
+	 * @covers PhpNw12\Workshop\Tutorial::addAttendee
 	 */
 	public function testAddAttendeeThrowsExceptionWhenAddingNewPersonToFullTutorial()
 	{
@@ -157,6 +176,7 @@ class TutorialTest extends \PHPUnit_Framework_TestCase
 	 * Make sure a PHP Error is thrown when invalid argument is passed to Tutorial's constructor
 	 * 
 	 * @expectedException PHPUnit_Framework_Error
+	 * @covers PhpNw12\Workshop\Tutorial::__construct
 	 */
 	public function testInitiatingTutorialWithWrongParamThrowsError()
 	{
@@ -165,6 +185,8 @@ class TutorialTest extends \PHPUnit_Framework_TestCase
 
 	/**
 	 * Makes sure greetings message is shown on the screen.
+	 * 
+	 * @covers PhpNw12\Workshop\Tutorial::displaySummary
 	 */
 	public function testDisplayShowsGreetingsMessage()
 	{
