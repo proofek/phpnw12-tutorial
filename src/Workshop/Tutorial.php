@@ -23,4 +23,14 @@ class Tutorial
 	{
 		return "Hello everybody at 'Test your code like a pro – PHPUnit in practice' tutorial";
 	}
+
+	/**
+	 * Returns a list of tutorial attendees
+	 *
+	 * @return array
+	 */
+	public function getAttendees()
+	{
+		return array();
+	}
 }

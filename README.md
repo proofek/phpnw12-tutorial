@@ -204,3 +204,87 @@ OK (1 test, 1 assertion)
 ```
 
 And here it is – our first successful test!
+
+### Using @test annotation
+
+There is another way of marking methods in your test case as tests, and this is with @test annotation. Let have a try.
+This time we need a method that returns us a list of attendees. Let’s assume that the method’s name will be getAttendees().
+As before we start with the test first:
+
+```php
+// tests/Workshop/TutorialTest.php
+<?php
+// (...)
+
+/**
+ * @test
+ *
+ * A test making sure getAttendees returns an array
+ */
+public function GetAttendeesReturnsListOfNames()
+{
+	$tutorial = new Tutorial();
+	$result = $tutorial->getAttendees();
+	$this->assertInternalType('array', $result);
+}
+
+// (...)
+```
+
+Obviously at this point in time we expect this test to fail (or rather crash) as the code (method) doesn’t exists yet:
+
+```
+$ phpunit tests/Workshop/TutorialTest.php
+PHPUnit 3.7.1 by Sebastian Bergmann.
+
+.
+Fatal error: Call to undefined method PhpNw12\Workshop\Tutorial::getAttendees() in /Users/smarek/Google Drive/phpnw12-workshop/tests/Workshop/TutorialTest.php on line 40
+
+Call Stack:
+    0.0003     639072   1. {main}() /usr/local/bin/phpunit:0
+    0.0046    1263248   2. PHPUnit_TextUI_Command::main() /usr/local/bin/phpunit:46
+    0.0046    1264264   3. PHPUnit_TextUI_Command->run() /usr/local/share/pear/PHPUnit/TextUI/Command.php:130
+    0.0355    4124320   4. PHPUnit_TextUI_TestRunner->doRun() /usr/local/share/pear/PHPUnit/TextUI/Command.php:177
+    0.0388    4700024   5. PHPUnit_Framework_TestSuite->run() /usr/local/share/pear/PHPUnit/TextUI/TestRunner.php:325
+    0.0453    5379000   6. PHPUnit_Framework_TestSuite->runTest() /usr/local/share/pear/PHPUnit/Framework/TestSuite.php:746
+    0.0453    5379000   7. PHPUnit_Framework_TestCase->run() /usr/local/share/pear/PHPUnit/Framework/TestSuite.php:776
+    0.0454    5379000   8. PHPUnit_Framework_TestResult->run() /usr/local/share/pear/PHPUnit/Framework/TestCase.php:770
+    0.0454    5380536   9. PHPUnit_Framework_TestCase->runBare() /usr/local/share/pear/PHPUnit/Framework/TestResult.php:649
+    0.0457    5436456  10. PHPUnit_Framework_TestCase->runTest() /usr/local/share/pear/PHPUnit/Framework/TestCase.php:825
+    0.0458    5438576  11. ReflectionMethod->invokeArgs() /usr/local/share/pear/PHPUnit/Framework/TestCase.php:967
+    0.0458    5438632  12. PhpNw12\Tests\Workshop\TutorialTest->GetAttendeesReturnsListOfNames() /usr/local/share/pear/PHPUnit/Framework/TestCase.php:967
+```
+
+Let’s fix it quickly, and for a time being create this method and make it return an empty array:
+
+```php
+// src/Workshop/Tutorial.php
+<?php
+
+// (...)
+
+/**
+ * Returns a list of tutorial attendees
+ *
+ * @return array
+ */
+public function getAttendees()
+{
+	return array();
+}
+
+// (...)
+```
+
+And re-run the tests:
+
+```
+$ phpunit tests/Workshop/TutorialTest.php
+PHPUnit 3.7.1 by Sebastian Bergmann.
+
+..
+
+Time: 0 seconds, Memory: 5.50Mb
+
+OK (2 tests, 2 assertions)
+```
