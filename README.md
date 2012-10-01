@@ -1104,3 +1104,55 @@ public function testAddAttendeeThrowsExceptionWhenAddingNewPersonToFullTutorial(
 
 // (...)
 ```
+
+Exercise 7: Asserting notices, warnings and errors
+--------------------------------------------------
+
+Testing exception is only one side of the “unhappy” scenario. Exceptions are usually quite predictable anyway, as most of them are thrown in a situation when you actually expect them and it was a developer who decided to throw them on purpose. The different side of the “unhappy” path is PHP error handler triggering errors, warning and notices. These are usually much harder to test, and much harder to predict.
+
+There’s hope, though. By default, PHPUnit converts PHP errors, warnings, and notices that are triggered during the execution of a test to an exception – e very specific type of an exception. Using these exceptions, you can for instance, expect a test to trigger a PHP error.
+
+### Testing PHP errors with PHPUnit_Framework_Error
+
+A typical situation when an error is being thrown by PHP is when you pass an incompatible type to a function. While it's probably not something you would test, it is a very simple example that we can use to show how you can catch it.
+
+```php
+// tests/Workshop/TutorialTest.php
+<?php
+// (...)
+
+/**
+ * Make sure a PHP Error is thrown when invalid argument is passed to Tutorial's constructor
+ */
+public function testInitiatingTutorialWithWrongParamThrowsError()
+{
+	$tutorial = new Tutorial(new \stdClass());
+}
+
+// (...)
+```
+
+When we run this test, obviously an error will be returned:
+
+```
+$ phpunit
+PHPUnit 3.7.1 by Sebastian Bergmann.
+
+Configuration read from /Users/smarek/Google Drive/phpnw12-workshop/phpunit.xml.dist
+
+.........E
+
+Time: 0 seconds, Memory: 6.25Mb
+
+There was 1 error:
+
+1) PhpNw12\Tests\Workshop\TutorialTest::testInitiatingTutorialWithWrongParamThrowsError
+Argument 1 passed to PhpNw12\Workshop\Tutorial::__construct() must be an array, object given, called in /Users/smarek/Google Drive/phpnw12-workshop/tests/Workshop/TutorialTest.php on line 162 and defined
+
+/Users/smarek/Google Drive/phpnw12-workshop/src/Workshop/Tutorial.php:44
+/Users/smarek/Google Drive/phpnw12-workshop/tests/Workshop/TutorialTest.php:162
+/usr/local/bin/phpunit:46
+
+FAILURES!
+Tests: 10, Assertions: 11, Errors: 1.
+```

@@ -153,4 +153,12 @@ class TutorialTest extends \PHPUnit_Framework_TestCase
 
 		$this->fail("'\Exception' was expected to be thrown, but wasn't");
 	}
+
+	/**
+	 * Make sure a PHP Error is thrown when invalid argument is passed to Tutorial's constructor
+	 */
+	public function testInitiatingTutorialWithWrongParamThrowsError()
+	{
+		$tutorial = new Tutorial(new \stdClass());
+	}
 }
