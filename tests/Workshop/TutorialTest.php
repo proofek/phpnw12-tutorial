@@ -56,4 +56,17 @@ class TutorialTest extends \PHPUnit_Framework_TestCase
 		$tutorial = new Tutorial($attendees);
 		$this->assertFalse($tutorial->arePlacesLeft());
 	}
+
+	/**
+	 * Checks that if there are less then 3 attendees there are still some places left
+	 */
+	public function testTutorialHasPlacesLeftWhenLessThen3Attendees()
+	{
+		$attendees = array(
+			"Sebastian Marek"
+		);
+
+		$tutorial = new Tutorial($attendees);
+		$this->assertTrue($tutorial->arePlacesLeft());
+	}
 }

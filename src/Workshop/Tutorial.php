@@ -51,4 +51,14 @@ class Tutorial
 	{
 		return $this->_attendees;
 	}
+
+	/**
+	 * Are there any more places left for the tutorial
+	 *
+	 * @return boolean
+	 */
+	public function arePlacesLeft()
+	{
+		return (count($this->getAttendees()) <= 3);
+	}
 }

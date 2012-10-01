@@ -540,3 +540,71 @@ Call Stack:
     0.4461    5497552  11. ReflectionMethod->invokeArgs() /usr/local/share/pear/PHPUnit/Framework/TestCase.php:967
     0.4461    5497608  12. PhpNw12\Tests\Workshop\TutorialTest->testTutorialHasNoPlacesLeftWhenMoreThen3Attendees() /usr/local/share/pear/PHPUnit/Framework/TestCase.php:967
 ```
+
+So let’s add the code then:
+
+```php
+// src/Workshop/Tutorial.php
+<?php
+
+// (...)
+
+/**
+ * Are there any more places left for the tutorial
+ *
+ * @return boolean
+ */
+public function arePlacesLeft()
+{
+	return (count($this->getAttendees()) <= 3);
+}
+
+// (...)
+```
+
+And run the tests again:
+
+```
+$ phpunit tests/Workshop/TutorialTest.php
+PHPUnit 3.7.1 by Sebastian Bergmann.
+
+...
+
+Time: 0 seconds, Memory: 5.50Mb
+
+OK (3 tests, 3 assertions)
+```
+
+Bear in mind it was only one possible scenario for this method, we still need to make sure that if we have less then 3 attendees there are places left in the tutorial:
+
+```php
+// tests/Workshop/TutorialTest.php
+<?php
+// (...)
+
+/**
+ * Checks that if there are less then 3 attendees there are still some places left
+ */
+public function testTutorialHasPlacesLeftWhenLessThen3Attendees()
+{
+	$attendees = array(
+		"Sebastian Marek"
+	);
+
+	$tutorial = new Tutorial($attendees);
+	$this->assertTrue($tutorial->arePlacesLeft());
+}
+
+// (...)
+```
+
+```
+$ phpunit tests/Workshop/TutorialTest.php
+PHPUnit 3.7.1 by Sebastian Bergmann.
+
+....
+
+Time: 1 second, Memory: 5.50Mb
+
+OK (4 tests, 4 assertions)
+```
