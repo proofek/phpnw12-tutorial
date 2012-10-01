@@ -102,3 +102,76 @@ Call Stack:
 ```
 
 That’s obviously an expected behavior. We have not implement the class yet. Let’s do this then now.
+
+### Implementing the code to make the test pass
+
+We exactly know what the class name and method name needs to be:
+
+```php
+// src/Workshop/Tutorial.php
+<?php
+/**
+ * PHPNW12 Workshop
+ *
+ * @author Sebastian Marek <proofek@gmail.com>
+ */
+namespace PhpNw12\Workshop;
+
+/**
+ * Tutorial class
+ *
+ * @author Sebastian Marek <proofek@gmail.com>
+ */
+
+class Tutorial
+{
+	/**
+	 * Returns a greetings message
+	 *
+	 * @return string
+	 */
+	public function greetings()
+	{
+	}
+}
+```
+
+We just need to include it in our test class:
+
+```php
+// tests/Workshop/TutorialTest.php
+<?php
+// (...)
+
+namespace PhpNw12\Tests\Workshop;
+
+require_once __DIR__ . '/../../src/Workshop/Tutorial.php';
+
+use PhpNw12\Workshop\Tutorial;
+
+// (...)
+```
+
+and re-run the test:
+
+```
+$ phpunit tests/Workshop/TutorialTest.php
+PHPUnit 3.7.1 by Sebastian Bergmann.
+
+F
+
+Time: 0 seconds, Memory: 5.75Mb
+
+There was 1 failure:
+
+1) PhpNw12\Tests\Workshop\TutorialTest::testGreetingsReturnWelcomeMessage
+Failed asserting that null matches expected 'Hello everybody at 'Test your code like a pro – PHPUnit in practice' tutorial'.
+
+/Users/smarek/Google Drive/phpnw12-workshop/tests/Workshop/TutorialTest.php:29
+/usr/local/bin/phpunit:46
+
+FAILURES!
+Tests: 1, Assertions: 1, Failures: 1.
+```
+
+Ha! Now we’re getting somewhere. The test is failing because our function returns nothing so far! Let’s change it then!

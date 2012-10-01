@@ -6,6 +6,7 @@
  */
 namespace PhpNw12\Tests\Workshop;
 
+require_once __DIR__ . '/../../src/Workshop/Tutorial.php';
 
 use PhpNw12\Workshop\Tutorial;
 
