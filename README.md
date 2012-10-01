@@ -1464,3 +1464,27 @@ Time: 0 seconds, Memory: 6.50Mb
 
 OK (15 tests, 31 assertions)
 ```
+
+Exercise 10: Code coverage
+--------------------------
+
+We got to the point now where we have a few unit tests in place but we don't really know how much of the code is actually tested. PHPUnit can generate a coverage report that can help you understand how much of the code is covered. In theory when you do proper TDD your code coverage should be very close to 100%. But if you have to cover existing code which has very low number of tests or no tests at all, the report is really handy. It allows you to quickly assess and track which parts of the code has to be still tested.
+
+To generate the report in HTML format use *--coverage-html* option and provide a directory where you want your report to be generated:
+
+```
+$ phpunit --coverage-html=/tmp/phpnw12-workshop
+PHPUnit 3.7.1 by Sebastian Bergmann.
+
+Configuration read from /Users/smarek/Google Drive/phpnw12-workshop/phpunit.xml.dist
+
+...............
+
+Time: 0 seconds, Memory: 7.50Mb
+
+OK (15 tests, 31 assertions)
+
+Generating code coverage report in HTML format ... done
+```
+
+Then just open /tmp/phpnw12-workshop/index.html in your browser.
