@@ -1027,3 +1027,37 @@ Time: 0 seconds, Memory: 6.25Mb
 
 OK (9 tests, 12 assertions)
 ```
+
+### Using @expectedException annotation
+
+If you prefer to use annotation then PHPUnit you can achieve the same effect by using *@expectedException*, *@expectedExceptionMessage* and *@expectedExceptionCode*.
+
+Here’s an example:
+
+```php
+// tests/Workshop/TutorialTest.php
+<?php
+// (...)
+
+/**
+ * Makes sure you can't add more attendees to oversubscribed tutorial
+ *
+ * @expectedException        \Exception
+ * @expectedExceptionMessage This tutorial is full. You can't add any more people to it.
+ */
+public function testAddAttendeeThrowsExceptionWhenAddingNewPersonToFullTutorial()
+{
+	$me = "Sebastian Marek";
+	$anotherPerson = "John Smith";
+	$yetAnotherPerson = "Peter Baker";
+	$attendees = array(
+		$me, $anotherPerson, $yetAnotherPerson
+	);
+
+	$tutorial = new Tutorial($attendees);
+	$newPerson = "Adam Late";
+	$tutorial->addAttendee($newPerson);
+}
+
+// (...)
+```
