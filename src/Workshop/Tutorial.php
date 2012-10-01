@@ -123,5 +123,6 @@ class Tutorial
 	 */
 	public function displaySummary()
 	{
+		echo $this->greetings();
 	}
 }

@@ -1348,3 +1348,36 @@ FAILURES!
 Tests: 12, Assertions: 14, Failures: 1.
 ```
 
+To fix this we just have to make sure displaySummary echos the appropriate message!
+
+```php
+// src/Workshop/Tutorial.php
+<?php
+
+// (...)
+
+/**
+ * Displays greetings message on the screen
+ *
+ * @return void
+ */
+public function displaySummary()
+{
+	echo $this->greetings();
+}
+
+// (...)
+```
+
+```
+$ phpunit
+PHPUnit 3.7.1 by Sebastian Bergmann.
+
+Configuration read from /Users/smarek/Google Drive/phpnw12-workshop/phpunit.xml.dist
+
+............
+
+Time: 0 seconds, Memory: 6.50Mb
+
+OK (12 tests, 14 assertions)
+```
