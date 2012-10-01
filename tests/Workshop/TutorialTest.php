@@ -125,8 +125,6 @@ class TutorialTest extends \PHPUnit_Framework_TestCase
 
 	/**
 	 * Makes sure you can't add more attendees to oversubscribed tutorial
-	 * @expectedException        \Exception
-	 * @expectedExceptionMessage This tutorial is full. You can't add any more people to it.
 	 */
 	public function testAddAttendeeThrowsExceptionWhenAddingNewPersonToFullTutorial()
 	{
@@ -138,7 +136,21 @@ class TutorialTest extends \PHPUnit_Framework_TestCase
 		);
 
 		$tutorial = new Tutorial($attendees);
-		$newPerson = "Adam Late";
-		$tutorial->addAttendee($newPerson);
+
+		try {
+
+			$newPerson = "Adam Late";
+			$tutorial->addAttendee($newPerson);
+
+		} catch (\Exception $e) {
+
+			$this->assertEquals(
+				"This tutorial is full. You can't add any more people to it.",
+				$e->getMessage()
+			);
+			return;
+		}
+
+		$this->fail("'\Exception' was expected to be thrown, but wasn't");
 	}
 }

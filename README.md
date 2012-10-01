@@ -836,7 +836,7 @@ public function testGetAttendeesReturnCorrectNumberOfAttendees()
 ```
 
 ```
-$ phpunit tests/Workshop/TutorialTest.php 
+$ phpunit tests/Workshop/TutorialTest.php
 PHPUnit 3.7.1 by Sebastian Bergmann.
 
 ........
@@ -1057,6 +1057,49 @@ public function testAddAttendeeThrowsExceptionWhenAddingNewPersonToFullTutorial(
 	$tutorial = new Tutorial($attendees);
 	$newPerson = "Adam Late";
 	$tutorial->addAttendee($newPerson);
+}
+
+// (...)
+```
+
+### Using try...catch block
+
+Finally you can use the old conventional method – the *try...catch* block to catch the specific exception and make the test fail if it's not been caught. Just like this:
+
+```php
+// tests/Workshop/TutorialTest.php
+<?php
+// (...)
+
+/**
+ * Makes sure you can't add more attendees to oversubscribed tutorial
+ */
+public function testAddAttendeeThrowsExceptionWhenAddingNewPersonToFullTutorial()
+{
+	$me = "Sebastian Marek";
+	$anotherPerson = "John Smith";
+	$yetAnotherPerson = "Peter Baker";
+	$attendees = array(
+		$me, $anotherPerson, $yetAnotherPerson
+	);
+
+	$tutorial = new Tutorial($attendees);
+
+	try {
+
+		$newPerson = "Adam Late";
+		$tutorial->addAttendee($newPerson);
+
+	} catch (\Exception $e) {
+
+		$this->assertEquals(
+			"This tutorial is full. You can't add any more people to it.",
+			$e->getMessage()
+		);
+		return;
+	}
+
+	$this->fail("'\Exception' was expected to be thrown, but wasn't");
 }
 
 // (...)
