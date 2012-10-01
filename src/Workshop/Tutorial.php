@@ -14,6 +14,14 @@ namespace PhpNw12\Workshop;
 
 class Tutorial
 {
+
+	/**
+	 * List of people attending the tutorial
+	 *
+	 * @var array
+	 */
+	private $_attendees;
+
 	/**
 	 * Returns a greetings message
 	 *
@@ -31,6 +39,6 @@ class Tutorial
 	 */
 	public function getAttendees()
 	{
-		return array();
+		return $this->_attendees;
 	}
 }

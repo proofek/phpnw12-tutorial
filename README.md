@@ -288,3 +288,61 @@ Time: 0 seconds, Memory: 5.50Mb
 
 OK (2 tests, 2 assertions)
 ```
+
+Exercise 2: Fixing the first failure
+------------------------------------
+
+Let’s work on the *getAttendees()* method, as it doesn’t return anything yet. 
+We will se the power of unit tests when used during refactoring. What we want to do first is to return some real data –
+we will create a private property called *$_attendees* that will be used as the value returned by *getAttendees()* method.
+
+```php
+// src/Workshop/Tutorial.php
+<?php
+
+// (...)
+
+/**
+ * List of people attending the tutorial
+ *
+ * @var array
+ */
+private $_attendees;
+
+// (...)
+
+/**
+ * Returns a list of tutorial attendees
+ *
+ * @return array
+ */
+public function getAttendees()
+{
+	return $this->_attendees;
+}
+
+// (...)
+```
+
+And re-run the tests to see whether we broke anything:
+
+```
+$ phpunit tests/Workshop/TutorialTest.php
+PHPUnit 3.7.1 by Sebastian Bergmann.
+
+.F
+
+Time: 0 seconds, Memory: 5.75Mb
+
+There was 1 failure:
+
+1) PhpNw12\Tests\Workshop\TutorialTest::GetAttendeesReturnsListOfNames
+Failed asserting that null is of type "array".
+
+/Users/smarek/Google Drive/phpnw12-workshop/tests/Workshop/TutorialTest.php:41
+/usr/local/bin/phpunit:46
+
+FAILURES!
+Tests: 2, Assertions: 2, Failures: 1.
+```
+
