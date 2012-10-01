@@ -95,4 +95,31 @@ class TutorialTest extends \PHPUnit_Framework_TestCase
 		$this->assertInstanceOf('PhpNw12\Workshop\Room',
 		$tutorial->getRoom());
 	}
+
+	/**
+	 * Checks whether an attendee got added to the tutorial
+	 */
+	public function testAttendeeGotAddedToTheList()
+	{
+		$me = "Sebastian Marek";
+		$attendees = array(
+			$me
+		);
+		$tutorial = new Tutorial($attendees);
+		$this->assertContains($me, $tutorial->getAttendees());
+	}
+
+	/**
+	 * Checks whether the number of attendees is correct
+	 */
+	public function testGetAttendeesReturnCorrectNumberOfAttendees()
+	{
+		$me = "Sebastian Marek";
+		$anotherPerson = "John Smith";
+		$attendees = array(
+			$me, $anotherPerson
+		);
+		$tutorial = new Tutorial($attendees);
+		$this->assertCount(count($attendees), $tutorial->getAttendees());
+	}
 }

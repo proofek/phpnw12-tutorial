@@ -785,3 +785,64 @@ Time: 0 seconds, Memory: 5.75Mb
 
 OK (6 tests, 8 assertions)
 ```
+
+### testing arrays with assertContains() and assertCount()
+
+Finally we gonna have a look at asserting the contents of an array with *assertContains()* and asserting size of an array with *assertCount()*. The first test will therefor check whether an attendee actually got added to the list:
+
+```php
+// tests/Workshop/TutorialTest.php
+<?php
+// (...)
+
+/**
+ * Checks whether an attendee got added to the tutorial
+ */
+public function testAttendeeGotAddedToTheList()
+{
+	$me = "Sebastian Marek";
+	$attendees = array(
+		$me
+	);
+	$tutorial = new Tutorial($attendees);
+	$this->assertContains($me, $tutorial->getAttendees());
+}
+
+// (...)
+```
+
+And the second one will check whether *getAttendees()* returns exactly the same size of the array as was supplied when Tutorial object was created:
+
+```php
+// tests/Workshop/TutorialTest.php
+<?php
+// (...)
+
+/**
+ * Checks whether the number of attendees is correct
+ */
+public function testGetAttendeesReturnCorrectNumberOfAttendees()
+{
+	$me = "Sebastian Marek";
+	$anotherPerson = "John Smith";
+	$attendees = array(
+		$me, $anotherPerson
+	);
+	$tutorial = new Tutorial($attendees);
+	$this->assertCount(count($attendees), $tutorial->getAttendees());
+}
+
+// (...)
+```
+
+```
+$ phpunit tests/Workshop/TutorialTest.php 
+PHPUnit 3.7.1 by Sebastian Bergmann.
+
+........
+
+Time: 0 seconds, Memory: 5.75Mb
+
+OK (8 tests, 10 assertions)
+```
+
