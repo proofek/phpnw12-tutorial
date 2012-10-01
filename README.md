@@ -481,3 +481,62 @@ Time: 1 second, Memory: 5.50Mb
 
 OK (1 test, 1 assertion)
 ```
+
+Exercise 4: More assertions
+---------------------------
+
+There is a big set of asserts that you can use. Using the right one for the job will make your life easier and also will self document the code. Tests can grow with time and can become quite nasty and hard to maintain if not written right. It is important to be aware of the available asserts and use the one that suits the given situation the best. 
+
+Full list of asserts is documented in PHPUnit manual. See http://www.phpunit.de/manual/current/en/writing-tests-forphpunit.html#writing-tests-for-phpunit.assertions for more details.
+
+### testing booleans with assertFalse() and assertTrue()
+
+Let’s start with testing boolean values. Being able to add attendees to the tutorial we will most probably need a way to find whether we can more attendees to it without breaking the room capacity. So a function called *arePlacesLeft()* would be really useful. Let’s assume for now that maximum room capacity is 3 and write first test that will make sure that if we have more then 3 people in the room there is no more places left. Using *assertFalse()* and *assertTrue()* will help us out here.
+
+```php
+// tests/Workshop/TutorialTest.php
+<?php
+// (...)
+
+/**
+ * Checks that if there are more then 3 attendees there are no places left
+ */
+public function testTutorialHasNoPlacesLeftWhenMoreThen3Attendees()
+{
+	$attendees = array(
+		"Sebastian Marek",
+		"Tom",
+		"Martha",
+		"John"
+	);
+	
+	$tutorial = new Tutorial($attendees);
+	$this->assertFalse($tutorial->arePlacesLeft());
+}
+
+// (...)
+```
+
+The test suite will obviously fail at this moment in time as we have not written the method yet.
+
+```
+$ phpunit tests/Workshop/TutorialTest.php
+PHPUnit 3.7.1 by Sebastian Bergmann.
+
+..
+Fatal error: Call to undefined method PhpNw12\Workshop\Tutorial::arePlacesLeft() in /Users/smarek/Google Drive/phpnw12-workshop/tests/Workshop/TutorialTest.php on line 57
+
+Call Stack:
+    0.0004     639072   1. {main}() /usr/local/bin/phpunit:0
+    0.2050    1263248   2. PHPUnit_TextUI_Command::main() /usr/local/bin/phpunit:46
+    0.2050    1264264   3. PHPUnit_TextUI_Command->run() /usr/local/share/pear/PHPUnit/TextUI/Command.php:130
+    0.3670    4141536   4. PHPUnit_TextUI_TestRunner->doRun() /usr/local/share/pear/PHPUnit/TextUI/Command.php:177
+    0.3738    4717360   5. PHPUnit_Framework_TestSuite->run() /usr/local/share/pear/PHPUnit/TextUI/TestRunner.php:325
+    0.4457    5437952   6. PHPUnit_Framework_TestSuite->runTest() /usr/local/share/pear/PHPUnit/Framework/TestSuite.php:746
+    0.4457    5437952   7. PHPUnit_Framework_TestCase->run() /usr/local/share/pear/PHPUnit/Framework/TestSuite.php:776
+    0.4457    5437952   8. PHPUnit_Framework_TestResult->run() /usr/local/share/pear/PHPUnit/Framework/TestCase.php:770
+    0.4458    5439488   9. PHPUnit_Framework_TestCase->runBare() /usr/local/share/pear/PHPUnit/Framework/TestResult.php:649
+    0.4461    5495408  10. PHPUnit_Framework_TestCase->runTest() /usr/local/share/pear/PHPUnit/Framework/TestCase.php:825
+    0.4461    5497552  11. ReflectionMethod->invokeArgs() /usr/local/share/pear/PHPUnit/Framework/TestCase.php:967
+    0.4461    5497608  12. PhpNw12\Tests\Workshop\TutorialTest->testTutorialHasNoPlacesLeftWhenMoreThen3Attendees() /usr/local/share/pear/PHPUnit/Framework/TestCase.php:967
+```

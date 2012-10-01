@@ -40,4 +40,20 @@ class TutorialTest extends \PHPUnit_Framework_TestCase
 		$result = $tutorial->getAttendees();
 		$this->assertInternalType('array', $result);
 	}
+
+	/**
+	 * Checks that if there are more then 3 attendees there are no places left
+	 */
+	public function testTutorialHasNoPlacesLeftWhenMoreThen3Attendees()
+	{
+		$attendees = array(
+			"Sebastian Marek",
+			"Tom",
+			"Martha",
+			"John"
+		);
+
+		$tutorial = new Tutorial($attendees);
+		$this->assertFalse($tutorial->arePlacesLeft());
+	}
 }
