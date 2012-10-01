@@ -608,3 +608,83 @@ Time: 1 second, Memory: 5.50Mb
 
 OK (4 tests, 4 assertions)
 ```
+
+### testing numbers with assertGreaterThan() and assertLessThan()
+
+Let’s now have a look at asserting numbers. It’d be good to know what is the number of attendees and make sure this number does not exceeds the tutorial's capacity. It’s a very similar test compared to the one for arePlaceLeft(), but instead we will look at the attendees number. We will also introduce a constant that will hold the maximum room capacity, so it is easier to reuse it.
+
+```php
+// tests/Workshop/TutorialTest.php
+<?php
+// (...)
+
+/**
+ * Checks whether we have not exceeded maximum number of attendees
+ */
+public function testTutorialIsNotFullWhenItNotExceedsMaximumCapacity()
+{
+	$attendees = array(
+		"Sebastian Marek"
+	);
+	$tutorial = new Tutorial($attendees);
+
+	$this->assertGreaterThan(0, $tutorial->getNumberOfAttendees());
+	$this->assertLessThan(Tutorial::MAX_CAPACITY, $tutorial->getNumberOfAttendees());
+	$this->assertNotNull($tutorial->getNumberOfAttendees());
+}
+
+// (...)
+```
+
+We have used assertGreaterThan(), assertLessThan() and assertNotNull() assertions to check for the number and whether it is within acceptable threshold. Obviously again, we know it will fail, as the code doesn’t exists yet, so let’s get to work:
+
+```php
+// src/Workshop/Tutorial.php
+<?php
+
+// (...)
+
+/**
+ * Maximum capacity of the tutorial
+ *
+ * @var integer
+ */
+const MAX_CAPACITY = 3;
+
+// (...)
+
+/**
+ * Returns the number of attendees
+ *
+ * @return int
+ */
+public function getNumberOfAttendees()
+{
+	return count($this->getAttendees());
+}
+
+/**
+ * Are there any more places left for the tutorial
+ *
+ * @return Boolean
+ */
+public function arePlacesLeft()
+{
+	return ($this->getNumberOfAttendees() <= self::MAX_CAPACITY);
+}
+
+// (...)
+```
+
+And run the tests:
+
+```
+$ phpunit tests/Workshop/TutorialTest.php
+PHPUnit 3.7.1 by Sebastian Bergmann.
+
+.....
+
+Time: 0 seconds, Memory: 5.75Mb
+
+OK (5 tests, 7 assertions)
+```

@@ -23,6 +23,13 @@ class Tutorial
 	private $_attendees;
 
 	/**
+	 * Maximum capacity of the tutorial
+	 *
+	 * @var integer
+	 */
+	const MAX_CAPACITY = 3;
+
+	/**
 	 * Constructor initiates the list of attendees
 	 *
 	 * @return void
@@ -53,12 +60,22 @@ class Tutorial
 	}
 
 	/**
+	 * Returns the number of attendees
+	 *
+	 * @return int
+	 */
+	public function getNumberOfAttendees()
+	{
+		return count($this->getAttendees());
+	}
+
+	/**
 	 * Are there any more places left for the tutorial
 	 *
-	 * @return boolean
+	 * @return Boolean
 	 */
 	public function arePlacesLeft()
 	{
-		return (count($this->getAttendees()) <= 3);
+		return ($this->getNumberOfAttendees() <= self::MAX_CAPACITY);
 	}
 }
