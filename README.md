@@ -887,3 +887,143 @@ Time: 0 seconds, Memory: 6.25Mb
 OK (8 tests, 10 assertions)
 ```
 
+Exercise 6: Asserting exceptions
+--------------------------------
+
+So far we have been testing positive situations - so called "happy path", when all things go fine. But this is only one part of it. As important, if not more, is testing "the unhappy path" - situations where something goes wrong. People often forget about it. One way of testing it, is checking whether a specific exception has been thrown, this way you can say that something went wrong in the situation when you expect it.
+
+There is a few ways of testing exceptions, and we are gonna have a look at them now.
+
+### Using setExpectedException() expectation
+
+Let's add new functionality to our code that will allow us to add people to the list of attendees with addAttendee(), but it will throw an exception of some sort if we try to add a person to a tutorial that have reached its maximum capacity.
+
+Let’s start with the test:
+
+```php
+// tests/Workshop/TutorialTest.php
+<?php
+// (...)
+
+/**
+ * Makes sure you can't add more attendees to oversubscribed tutorial
+ */
+public function testAddAttendeeThrowsExceptionWhenAddingNewPersonToFullTutorial()
+{
+	$me = "Sebastian Marek";
+	$anotherPerson = "John Smith";
+	$yetAnotherPerson = "Peter Baker";
+	$attendees = array(
+		$me, $anotherPerson, $yetAnotherPerson
+	);
+
+	$tutorial = new Tutorial($attendees);
+	$newPerson = "Adam Late";
+	$this->setExpectedException('\Exception', "This tutorial is full. You can't add any more people to it.");
+	$tutorial->addAttendee($newPerson);
+}
+
+// (...)
+```
+
+Followed by adding the new method which will simply add an element to our attendees array:
+
+```php
+// src/Workshop/Tutorial.php
+<?php
+
+// (...)
+
+/**
+ * Adds an attendee to the list of attendees
+ *
+ * @param string $name Attendee name
+ *
+ * @return PhpNw12\Workshop\Tutorial
+ */
+public function addAttendee($name)
+{
+	$this->_attendees[] = $name;
+	return $this;
+}
+
+// (...)
+```
+
+With this in place we can run our test suite:
+
+```
+$ phpunit
+PHPUnit 3.7.1 by Sebastian Bergmann.
+
+Configuration read from /Users/smarek/Google Drive/phpnw12-workshop/phpunit.xml.dist
+
+........F
+
+Time: 1 second, Memory: 6.25Mb
+
+There was 1 failure:
+
+1) PhpNw12\Tests\Workshop\TutorialTest::testAddAttendeeThrowsExceptionWhenAddingNewPersonToFullTutorial
+Failed asserting that exception of type "\Exception" is thrown.
+
+/usr/local/bin/phpunit:46
+
+FAILURES!
+Tests: 9, Assertions: 11, Failures: 1.
+```
+
+As expected a failure is reported as the method for now doesn’t throw any exceptions. So let’s add the code dealing with the situation when you’re not allowed to add anymore attendees and fix the *arePlacesLeft()* method as it wrongly returns true when the room is full!:
+
+```php
+// src/Workshop/Tutorial.php
+<?php
+
+// (...)
+
+/**
+ * Are there any more places left for the tutorial
+ *
+ * @return Boolean
+ */
+public function arePlacesLeft()
+{
+	return ($this->getNumberOfAttendees() < self::MAX_CAPACITY);
+}
+
+/**
+ * Adds an attendee to the list of attendees
+ *
+ * @param string $name Attendee name
+ *
+ * @return PhpNw12\Workshop\Tutorial
+ * @throws \Exception
+ */
+public function addAttendee($name)
+{
+	if (!$this->arePlacesLeft()) {
+
+		throw new \Exception("This tutorial is full. You can't add any more people to it.");
+	}
+
+	$this->_attendees[] = $name;
+	return $this;
+}
+
+// (...)
+```
+
+This time we have no errors reported:
+
+```
+$ phpunit
+PHPUnit 3.7.1 by Sebastian Bergmann.
+
+Configuration read from /Users/smarek/Google Drive/phpnw12-workshop/phpunit.xml.dist
+
+.........
+
+Time: 0 seconds, Memory: 6.25Mb
+
+OK (9 tests, 12 assertions)
+```

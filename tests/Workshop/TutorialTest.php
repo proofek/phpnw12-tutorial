@@ -122,4 +122,22 @@ class TutorialTest extends \PHPUnit_Framework_TestCase
 		$tutorial = new Tutorial($attendees);
 		$this->assertCount(count($attendees), $tutorial->getAttendees());
 	}
+
+	/**
+	 * Makes sure you can't add more attendees to oversubscribed tutorial
+	 */
+	public function testAddAttendeeThrowsExceptionWhenAddingNewPersonToFullTutorial()
+	{
+		$me = "Sebastian Marek";
+		$anotherPerson = "John Smith";
+		$yetAnotherPerson = "Peter Baker";
+		$attendees = array(
+			$me, $anotherPerson, $yetAnotherPerson
+		);
+
+		$tutorial = new Tutorial($attendees);
+		$newPerson = "Adam Late";
+		$this->setExpectedException('\Exception', "This tutorial is full. You can't add any more people to it.");
+		$tutorial->addAttendee($newPerson);
+	}
 }

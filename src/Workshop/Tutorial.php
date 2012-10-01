@@ -94,6 +94,25 @@ class Tutorial
 	 */
 	public function arePlacesLeft()
 	{
-		return ($this->getNumberOfAttendees() <= self::MAX_CAPACITY);
+		return ($this->getNumberOfAttendees() < self::MAX_CAPACITY);
+	}
+
+	/**
+	 * Adds an attendee to the list of attendees
+	 *
+	 * @param string $name Attendee name
+	 *
+	 * @return PhpNw12\Workshop\Tutorial
+	 * @throws \Exception
+	 */
+	public function addAttendee($name)
+	{
+		if (!$this->arePlacesLeft()) {
+
+			throw new \Exception("This tutorial is full. You can't add any more people to it.");
+		}
+
+		$this->_attendees[] = $name;
+		return $this;
 	}
 }
