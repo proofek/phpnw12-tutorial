@@ -163,4 +163,15 @@ class TutorialTest extends \PHPUnit_Framework_TestCase
 	{
 		$tutorial = new Tutorial(new \stdClass());
 	}
+
+	/**
+	 * Makes sure greetings message is shown on the screen.
+	 */
+	public function testDisplayShowsGreetingsMessage()
+	{
+		$expectedMessage = "Hello everybody at 'Test your code like a pro – PHPUnit in practice' tutorial";
+		$this->expectOutputString($expectedMessage);
+		$tutorial = new Tutorial();
+		$tutorial->displaySummary();
+	}
 }

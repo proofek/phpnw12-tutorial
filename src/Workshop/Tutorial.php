@@ -115,4 +115,13 @@ class Tutorial
 		$this->_attendees[] = $name;
 		return $this;
 	}
+
+	/**
+	 * Displays greetings message on the screen
+	 *
+	 * @return void
+	 */
+	public function displaySummary()
+	{
+	}
 }

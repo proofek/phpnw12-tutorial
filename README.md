@@ -1292,3 +1292,59 @@ Time: 0 seconds, Memory: 6.50Mb
 OK (11 tests, 13 assertions)
 ```
 
+Exercise 8: Asserting output
+----------------------------
+
+Sometimes you want to test a script that displays something on the standard output. PHPUnit supports that with set of expectations that you can use to assert certain messages being displayed on your screen.
+
+Let’s assume we need to actually display our greetings message on the screen and need to make sure that this has happened when *Tutorial:: displaySummary()* method is called. For that purpose we will reuse our *Tutorial::greetings()* method.
+
+*expectOutputString()* is the basic expectation that you can use for that:
+
+```php
+// tests/Workshop/TutorialTest.php
+<?php
+// (...)
+
+/**
+ * Makes sure greetings message is shown on the screen.
+ */
+public function testDisplayShowsGreetingsMessage()
+{
+	$expectedMessage = "Hello everybody at 'Test your code like a pro – PHPUnit in practice' tutorial";
+	$this->expectOutputString($expectedMessage);
+	$tutorial = new Tutorial();
+	$tutorial->displaySummary();
+}
+
+// (...)
+```
+
+If *displaySummary()* doesn’t display the expected message we can expect a failure like this to be returned:
+
+```
+$ phpunit
+PHPUnit 3.7.1 by Sebastian Bergmann.
+
+Configuration read from /Users/smarek/Google Drive/phpnw12-workshop/phpunit.xml.dist
+
+...........F
+
+Time: 0 seconds, Memory: 6.50Mb
+
+There was 1 failure:
+
+1) PhpNw12\Tests\Workshop\TutorialTest::testDisplayShowsGreetingsMessage
+Failed asserting that two strings are equal.
+--- Expected
++++ Actual
+@@ @@
+-'Hello everybody at 'Test your code like a pro – PHPUnit in practice' tutorial'
++''
+
+/usr/local/bin/phpunit:46
+
+FAILURES!
+Tests: 12, Assertions: 14, Failures: 1.
+```
+
