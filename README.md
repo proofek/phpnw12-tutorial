@@ -1425,3 +1425,42 @@ public function provideListOfAttendeesNotExceedingMaximumTutorialCapacity()
 
 // (...)
 ```
+
+All we have to do now, is to modify the test and add the annotation pointing at our new data provider and specifying one parameter which will be the data returned by the data provider:
+
+```php
+// tests/Workshop/TutorialTest.php
+<?php
+// (...)
+
+/**
+ * Checks whether we have not exceeded maximum number of attendees
+ *
+ * @dataProvider provideListOfAttendeesNotExceedingMaximumTutorialCapacity
+ */
+public function testTutorialIsNotFullWhenItNotExceedsMaximumCapacity(array $attendees)
+{
+	$tutorial = new Tutorial($attendees);
+
+	$this->assertGreaterThanOrEqual(0, $tutorial->getNumberOfAttendees());
+	$this->assertLessThanOrEqual(Tutorial::MAX_CAPACITY, $tutorial->getNumberOfAttendees());
+	$this->assertNotNull($tutorial->getNumberOfAttendees());
+}
+
+// (...)
+```
+
+Take a note that after running the test suite now, number of the tests and assertions has changed appropriately. 
+
+```
+$ phpunit
+PHPUnit 3.7.1 by Sebastian Bergmann.
+
+Configuration read from /Users/smarek/Google Drive/phpnw12-workshop/phpunit.xml.dist
+
+...............
+
+Time: 0 seconds, Memory: 6.50Mb
+
+OK (15 tests, 31 assertions)
+```

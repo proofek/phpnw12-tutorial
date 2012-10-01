@@ -73,16 +73,15 @@ class TutorialTest extends \PHPUnit_Framework_TestCase
 
 	/**
 	 * Checks whether we have not exceeded maximum number of attendees
+	 * 
+	 * @dataProvider provideListOfAttendeesNotExceedingMaximumTutorialCapacity
 	 */
-	public function testTutorialIsNotFullWhenItNotExceedsMaximumCapacity()
+	public function testTutorialIsNotFullWhenItNotExceedsMaximumCapacity(array $attendees)
 	{
-		$attendees = array(
-			"Sebastian Marek"
-		);
 		$tutorial = new Tutorial($attendees);
 
-		$this->assertGreaterThan(0, $tutorial->getNumberOfAttendees());
-		$this->assertLessThan(Tutorial::MAX_CAPACITY, $tutorial->getNumberOfAttendees());
+		$this->assertGreaterThanOrEqual(0, $tutorial->getNumberOfAttendees());
+		$this->assertLessThanOrEqual(Tutorial::MAX_CAPACITY, $tutorial->getNumberOfAttendees());
 		$this->assertNotNull($tutorial->getNumberOfAttendees());
 	}
 
