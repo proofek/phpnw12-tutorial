@@ -27,7 +27,7 @@ class Tutorial
 	 *
 	 * @return void
 	 */
-	public function __construct(array $attendees)
+	public function __construct(array $attendees = array())
 	{
 		$this->_attendees = $attendees;
 	}

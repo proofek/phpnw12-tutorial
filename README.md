@@ -399,3 +399,18 @@ Tests: 2, Assertions: 0, Errors: 2.
 ```
 
 Now we broke both of the tests, because we have changed the constructor definition (by simply introducing it), but have not changed the tests itself to reflect it!
+
+We have to options here, either changing all the tests an initiate the attendees input array, or change the constructor and re-define the input array so if it’s not supplied it will default to an empty array. We will go for the second option.
+
+Well done, finally green again:
+
+```
+$ phpunit tests/Workshop/TutorialTest.php
+PHPUnit 3.7.1 by Sebastian Bergmann.
+
+..
+
+Time: 0 seconds, Memory: 5.50Mb
+
+OK (2 tests, 2 assertions)
+```
