@@ -1156,3 +1156,38 @@ Argument 1 passed to PhpNw12\Workshop\Tutorial::__construct() must be an array, 
 FAILURES!
 Tests: 10, Assertions: 11, Errors: 1.
 ```
+
+If that would be a situation for which you want to write a test, then knowing that PHPUnit converts these kind of errors into PHPUnit_Framework_Error exception will easily help us set up an expectation:
+
+```php
+// tests/Workshop/TutorialTest.php
+<?php
+// (...)
+
+/**
+ * Make sure a PHP Error is thrown when invalid argument is passed to Tutorial's constructor
+ *
+ * @expectedException PHPUnit_Framework_Error
+ */
+public function testInitiatingTutorialWithWrongParamThrowsError()
+{
+	$tutorial = new Tutorial(new \stdClass());
+}
+
+// (...)
+```
+
+And make the test pass:
+
+```
+$ phpunit
+PHPUnit 3.7.1 by Sebastian Bergmann.
+
+Configuration read from /Users/smarek/Google Drive/phpnw12-workshop/phpunit.xml.dist
+
+..........
+
+Time: 0 seconds, Memory: 6.25Mb
+
+OK (10 tests, 12 assertions)
+```

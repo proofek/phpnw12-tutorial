@@ -156,6 +156,8 @@ class TutorialTest extends \PHPUnit_Framework_TestCase
 
 	/**
 	 * Make sure a PHP Error is thrown when invalid argument is passed to Tutorial's constructor
+	 * 
+	 * @expectedException PHPUnit_Framework_Error
 	 */
 	public function testInitiatingTutorialWithWrongParamThrowsError()
 	{
