@@ -846,3 +846,44 @@ Time: 0 seconds, Memory: 5.75Mb
 OK (8 tests, 10 assertions)
 ```
 
+Exercise 5: Using phpunit.xml file
+----------------------------------
+
+When you find yourself using some of the CLI options frequently or you just want to enforce some of them being set up in a specific way, phpunit.xml file can be very useful. You can set all these options in a very simple xml format and then just type *phpunit* and PHPUnit will apply all of them.
+
+
+```xml
+// phpunit.xml.dist
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit colors="true" backupGlobals="false" forceCoversAnnotation="true" processIsolation="false" strict="true">
+    <testsuites>
+        <testsuite name="PHPNW12 Workshop Test Suite">
+            <directory suffix="Test.php">./tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory>./src</directory>
+            <exclude>
+                <directory>./Tests</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+</phpunit>
+```
+
+```
+$ phpunit
+PHPUnit 3.7.1 by Sebastian Bergmann.
+
+Configuration read from /Users/smarek/Google Drive/phpnw12-workshop/phpunit.xml.dist
+
+........
+
+Time: 0 seconds, Memory: 6.25Mb
+
+OK (8 tests, 10 assertions)
+```
+
