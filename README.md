@@ -414,3 +414,70 @@ Time: 0 seconds, Memory: 5.50Mb
 
 OK (2 tests, 2 assertions)
 ```
+
+Exercise 3: PHPUnit CLI options
+-------------------------------
+
+PHPUnit experience can be greatly enhanced with some of the command line options. Full documentation is available in [PHPUnit manual](http://www.phpunit.de/manual/current/en/textui.html#textui.clioptions)
+
+### --colors
+
+Default PHPUnit output is quite dull. You can greatly enhance your experience with colors. *--colors* options react to what happens during runtime, and uses colors to get your attention. Green for passing tests, yellow for incomplete,skipped or general warnings and red when something goes horribly wrong.
+
+```
+$ phpunit --colors tests/Workshop/TutorialTest.php 
+PHPUnit 3.7.1 by Sebastian Bergmann.
+
+..
+
+Time: 1 second, Memory: 5.50Mb
+
+OK (2 tests, 2 assertions)
+```
+
+### --testdox
+
+You can also make PHPUnit speak to you with a bit more english language and make it to self document the tests itself. This option basically converts function names written in camelcase convention into sentences. So a method called *testNoMoreThenTenAttendeedCanBeInTheRoom* is being displayed as *No more then ten attendeed can be in the room*
+
+```
+$ phpunit --testdox tests/Workshop/TutorialTest.php
+PHPUnit 3.7.1 by Sebastian Bergmann.
+
+PhpNw12\Tests\Workshop\Tutorial
+ [x] Greetings return welcome message
+ [x] Get attendees returns list of names
+```
+
+### --debug
+
+In debug mode PHPUnit outputs a bit more information during runtime to show you what executes and in what order. It can be a really useful option when it comes to diagnosing problems with your tests.
+
+```
+$ phpunit --debug tests/Workshop/TutorialTest.php
+PHPUnit 3.7.1 by Sebastian Bergmann.
+
+
+Starting test 'PhpNw12\Tests\Workshop\TutorialTest::testGreetingsReturnWelcomeMessage'.
+.
+Starting test 'PhpNw12\Tests\Workshop\TutorialTest::GetAttendeesReturnsListOfNames'.
+.
+
+Time: 0 seconds, Memory: 5.50Mb
+
+OK (2 tests, 2 assertions)
+```
+
+### --filter
+
+If you are working on a specific test, or you have a big test suite and for whetever reason you don't want to run the whole suite you can use *--filter* option to run tests which name matches given pattern. The pattern can be either the name of a  test or a regular expression that matches multiple test names.
+
+```
+$ phpunit --filter=testGreetingsReturnWelcomeMessage tests/Workshop/TutorialTest.php
+PHPUnit 3.7.1 by Sebastian Bergmann.
+
+.
+
+Time: 1 second, Memory: 5.50Mb
+
+OK (1 test, 1 assertion)
+```
